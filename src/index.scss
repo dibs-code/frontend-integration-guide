@@ -1,0 +1,369 @@
+// @import "~bootstrap/scss/functions";
+// @import "~bootstrap/scss/variables";
+
+@import 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: Inter, sans-serif !important;
+  background: url(./backgroundimage/bg-pattern.png), #090333;
+  scroll-behavior: smooth;
+}
+
+:root {
+  --toastify-color-success: #00dedd !important;
+}
+
+::-webkit-scrollbar {
+  height: 6px;
+  /* height of horizontal scrollbar ← You're missing this */
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 10px rgb(0 0 0 / 30%);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #9da6ea 0% 0% no-repeat padding-box;
+  border-radius: 5px;
+}
+
+// general css
+
+.f-f-fg {
+  font-family: 'Figtree', sans-serif;
+}
+
+.b-f {
+  color: #b8b6cb;
+}
+
+.text-white {
+  color: #ffffff;
+}
+
+// flex properties
+
+.flex {
+  display: flex;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+// image , video
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+.bg-index {
+  z-index: -1;
+}
+
+.overflow-x-clip {
+  overflow-x: clip;
+}
+
+.referal-code-bg {
+  background: url(./backgroundimage/referral-desktop.png);
+
+  @media (max-width: 960px) {
+    background: url(./backgroundimage/referral-mobile.png);
+  }
+}
+
+//colors
+
+.text-sky {
+  color: #26fffe !important;
+  font-weight: 500;
+}
+
+.gradient-text {
+  background: transparent linear-gradient(90deg, #ed00c9 0%, #bd00ed 100%) 0% 0% no-repeat padding-box;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  width: fit-content;
+}
+
+.no-link {
+  text-decoration: none !important;
+}
+
+// container-1
+
+.container-1 {
+  max-width: 100%;
+  padding: 0 24px;
+  height: 100%;
+
+  @media (min-width: 768px) {
+    padding: 0 80px;
+    max-width: 768px;
+  }
+
+  @media (min-width: 1024px) {
+    max-width: 1024px;
+  }
+
+  @media (min-width: 1280px) {
+    max-width: 1104px;
+    padding: 0px;
+  }
+}
+
+.gradient-bg {
+  background: transparent linear-gradient(128deg, #ed00c9 0%, #bd00ed 100%) 0% 0% no-repeat padding-box;
+}
+
+.gradient-bg-new {
+  background: transparent linear-gradient(128deg, #150030 0%, #110033 100%) 0% 0% no-repeat padding-box;
+}
+
+.solid-bg {
+  background: transparent linear-gradient(90deg, #1d023b 0%, #17023e 100%) 0% 0% no-repeat padding-box;
+}
+
+.border-bottom-gradient {
+  border-bottom: 1px solid transparent;
+  -webkit-border-image: -webkit-linear-gradient(128deg, #ed00c9 0%, #bd00ed 100%);
+  border-image-slice: 1;
+  width: 100%;
+}
+
+// inputs unecessary ring
+
+input:focus {
+  border-width: 0px !important;
+  outline: 0 !important;
+  /* I have also tried outline:none */
+  -webkit-appearance: none !important;
+  box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0 !important;
+}
+
+/* Firefox */
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+.react-datepicker {
+  border-radius: 5px;
+  border: 0;
+
+  .react-datepicker__triangle {
+    display: none;
+  }
+
+  .react-datepicker__navigation-icon::before {
+    top: 11px;
+  }
+
+  .react-datepicker__input-container {
+    height: 100%;
+  }
+
+  .react-datepicker__header {
+    background: #0000af 0% 0% no-repeat padding-box;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+
+    .react-datepicker__current-month {
+      color: #e9e9f2;
+      font-weight: 600;
+      font-size: 0.875rem;
+      font-family: 'Figtree', sans-serif;
+      padding-bottom: 8px;
+    }
+  }
+
+  .react-datepicker__day--selected,
+  .react-datepicker__day--keyboard-selected {
+    background-color: #0013f1;
+    border-radius: 4px;
+  }
+
+  .react-datepicker__day-names {
+    background: #e9e9f2 0% 0% no-repeat padding-box;
+  }
+}
+
+.notify-class {
+  z-index: 99999;
+
+  .Toastify__toast {
+    background: #0d1238 0% 0% no-repeat padding-box;
+    border-radius: 3px;
+
+    .message-icon {
+      margin-right: 12.5px;
+      padding-right: 12.5px;
+    }
+
+    .message-title {
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    &.Toastify__toast--success {
+      border: 1px solid #55a361;
+
+      .message-icon {
+        border-right: 1px solid #55a361;
+      }
+    }
+
+    &.Toastify__toast--error {
+      border: 1px solid #cf3a41;
+
+      .message-icon {
+        border-right: 1px solid #cf3a41;
+      }
+    }
+
+    &.Toastify__toast--warning {
+      border: 1px solid #edb831;
+
+      .message-icon {
+        border-right: 1px solid #edb831;
+      }
+    }
+
+    &.Toastify__toast--info {
+      border: 1px solid #006cff;
+
+      .message-icon {
+        border-right: 1px solid #006cff;
+      }
+    }
+
+    .Toastify__toast-icon {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+.paraent > div {
+  width: 100% !important;
+
+  @media (min-width: 600px) {
+    width: unset !important;
+  }
+}
+
+.border-custom {
+  background-image: linear-gradient(to right, #b8b6cb 30%, #b8b6cb 100%);
+  background-repeat: repeat no-repeat;
+  background-size: 2% 1px;
+  background-position: 0 0, 0 calc(100% - 1px);
+}
+
+.dropdownwrapper > div {
+  width: 100% !important;
+}
+
+.gradientBorder {
+  background-image: linear-gradient(to right, #ed00c9 30%, #bd00ed 100%);
+  /* the gradient */
+  background-origin: border-box;
+  /* set background to start from border-box */
+  border-spacing: 5px;
+  /* space between each cell */
+  border: 3px solid transparent;
+  /* optional */
+}
+
+.border_bottom {
+  background-image: linear-gradient(to left, #ed00c9 30%, #bd00ed 100%);
+  /* the gradient */
+  background-origin: border-box;
+  /* set background to start from border-box */
+  border-spacing: 5px;
+  /* space between each cell */
+  border-bottom: 1px solid transparent;
+  /* optional */
+}
+
+.popup-gradientbg {
+  background: transparent linear-gradient(90deg, #1d023b 0%, #17023e 100%) 0% 0% no-repeat padding-box;
+}
+
+.gradientBorder {
+  background: #16033a !important;
+  border-image-slice: 1;
+  border-width: 1px;
+  border-image-source: linear-gradient(128deg, #ed00c9 0%, #bd00ed 100%);
+}
+
+#custom-tooltip::after {
+  border: 1px solid rgba(0 0 175) !important;
+  left: 50% !important;
+}
+
+#custom-tooltip2::after {
+  border: 1px solid rgba(0 0 175) !important;
+  left: 50% !important;
+}
+
+.__react_component_tooltip::after {
+  border: 1px solid rgba(0 0 175) !important;
+  left: -4px !important;
+}
+
+.peer:checked ~ .peer-checked {
+  background: transparent linear-gradient(128deg, #ed00c9 0%, #bd00ed 100%) 0% 0% no-repeat padding-box !important;
+}
+
+.text-shadow-10 {
+  text-shadow: 0px 0px 10px #747474;
+}
+
+input[type='checkbox'] {
+  appearance: none;
+  background-color: #090333;
+  background-origin: border-box;
+  display: inline-block;
+  flex-shrink: 0;
+  border: 1px solid #757384 !important;
+}
+
+input[type='checkbox']:checked {
+  background-color: currentColor;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg viewBox='0 0 16 16' fill='%23fff' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12.207 4.793a1 1 0 0 1 0 1.414l-5 5a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L6.5 9.086l4.293-4.293a1 1 0 0 1 1.414 0z'/%3E%3C/svg%3E");
+  border: 1px solid transparent !important;
+}
+
+.muon-height {
+  height: 100vh;
+}
