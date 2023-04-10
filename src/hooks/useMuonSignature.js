@@ -1,6 +1,6 @@
 import { useWeb3React } from '@web3-react/core'
 import { useCallback } from 'react'
-const ethers = require("ethers")
+import { ethers } from 'ethers'
 
 const useGetMuonSignature = () => {
   const { library } = useWeb3React()

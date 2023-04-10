@@ -20,7 +20,7 @@ import { multicall } from '../utils/multicall'
 import { BaseAssetsConetext } from '../context/BaseAssetsConetext'
 import useGetMuonSignature from './useMuonSignature'
 import Web3 from 'web3'
-const ethers = require("ethers")
+import { ethers } from 'ethers'
 
 const getWeeklyLeaderboardData = async (epoch) => {
   let result = []
