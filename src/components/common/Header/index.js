@@ -50,6 +50,10 @@ const Header = () => {
   }, [route.pathname])
 
   useEffect(() => {
+    console.log('account :>> ', account)
+    console.log('connector :>> ', connector)
+    console.log('selected :>> ', selected)
+
     if (account) {
       if (!connector && !selected) {
         setConnector(connectors[0])

@@ -4,7 +4,7 @@ import { updateTransaction } from '../state/transactions/actions'
 import { getWBNBAddress } from './addressHelpers'
 import { customNotify } from './notify'
 
-const backendApi = process.env.REACT_APP_BACKEND_API
+const backendApi = 'https://api.thena.fi/api/v1'
 
 const getBaseAssets = async () => {
   try {
