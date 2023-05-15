@@ -105,6 +105,7 @@ const useDibsCode = () => {
   const [parentCodeName, setParentCodeName] = useState('')
   const [balancesToClaim, setBalancesToClaim] = useState([])
   const [claimedBalances, setClaimedBalances] = useState([])
+  const [projectId, setProjectId] = useState('')
   const dibsContract = useDibs()
   const { account } = useWeb3React()
   const { fastRefresh } = useRefresh()
@@ -113,15 +114,17 @@ const useDibsCode = () => {
   useEffect(() => {
     const fetchAccountInfo = async () => {
       try {
-        const [res0, res1, res2] = await Promise.all([
+        const [res0, res1, res2, res3] = await Promise.all([
           dibsContract.methods.getCodeName(account).call(),
           dibsContract.methods.parents(account).call(),
           dibsClient.query({
             query: ACCUMULATIVE_TOKEN_BALANCES(account.toLowerCase()),
             fetchPolicy: 'cache-first',
           }),
+          dibsContract.methods.PROJECT_ID().call(),
         ])
         setCodeName(res0)
+        setProjectId(res3)
         if (!res1 || res1 === ZERO_ADDRESS) {
           setParentCodeName('')
         } else {
@@ -165,7 +168,7 @@ const useDibsCode = () => {
     }
   }, [dibsContract, account, baseAssets, fastRefresh])
 
-  return { codeName, parentCodeName, balancesToClaim, claimedBalances }
+  return { codeName, parentCodeName, balancesToClaim, claimedBalances, projectId }
 }
 
 const useRegister = () => {
@@ -178,21 +181,10 @@ const useRegister = () => {
     async (name, parentName) => {
       const yourCode = keccak256(toUtf8Bytes(name))
       const parentCode = keccak256(toUtf8Bytes(parentName))
-      const [res0, res1, res2] = await Promise.all([
-        dibsContract.methods.codeToAddress(yourCode).call(),
-        dibsContract.methods.addressToCode(account).call(),
-        dibsContract.methods.codeToAddress(parentCode).call(),
-      ])
+      const [res0, res1] = await Promise.all([dibsContract.methods.codeToAddress(yourCode).call(), dibsContract.methods.codeToAddress(parentCode).call()])
+      console.log({ res0, res1 })
       if (res0 !== ZERO_ADDRESS) {
         customNotify('Code already exists', 'warn')
-        return
-      }
-      if (res1 !== '0x0000000000000000000000000000000000000000000000000000000000000000') {
-        customNotify('Code already exists', 'warn')
-        return
-      }
-      if (res2 === ZERO_ADDRESS) {
-        customNotify(`Referral code doesn't exist`, 'warn')
         return
       }
       const key = uuidv4()
@@ -213,7 +205,7 @@ const useRegister = () => {
 
       setPending(true)
       try {
-        await sendContract(dispatch, key, registeruuid, dibsContract, 'register', [account, name, parentCode], account)
+        await sendContract(dispatch, key, registeruuid, dibsContract, 'register', [name, parentCode], account)
       } catch (err) {
         console.log('register error :>> ', err)
         setPending(false)
@@ -390,6 +382,7 @@ const useClaimFees = () => {
   const dispatch = useDispatch()
   const muonContract = useMuon()
   const getMuonSignature = useGetMuonSignature()
+  const { projectId } = useDibsCode()
 
   const handleClaimFees = useCallback(
     async (balanceToClaim) => {
@@ -424,12 +417,13 @@ const useClaimFees = () => {
       let muonVerificationData
       try {
         const response = await fetch(
-          `${REACT_APP_MUON_API_URL}v1/?app=dibs&method=claim&params[user]=${account}&params[token]=${balanceToClaim.address}&params[time]=${timestamp}&params[sign]=${sig}`,
+          `${REACT_APP_MUON_API_URL}v1/?app=dibsGlobal&method=claim&params[user]=${account}&params[projectId]=${projectId}&params[token]=${balanceToClaim.address}&params[time]=${timestamp}&params[sign]=${sig}`,
           {
             method: 'get',
           },
         )
         const res = await response.json()
+        console.log({ res })
         if (res.success) {
           muonVerificationData = res.result
         } else {
@@ -488,7 +482,7 @@ const useClaimFees = () => {
       )
       setPending(false)
     },
-    [account, muonContract, getMuonSignature],
+    [account, projectId, muonContract, getMuonSignature],
   )
 
   return { onClaimFees: handleClaimFees, pending }

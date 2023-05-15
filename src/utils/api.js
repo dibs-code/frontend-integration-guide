@@ -8,7 +8,7 @@ const backendApi = process.env.REACT_APP_BACKEND_API
 
 const getBaseAssets = async () => {
   try {
-    const response = await fetch(`${backendApi}/baseAssets`, {
+    const response = await fetch(`${backendApi}/assets`, {
       method: 'get',
     })
     const baseAssetsCall = await response.json()

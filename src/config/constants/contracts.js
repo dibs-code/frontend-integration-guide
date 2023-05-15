@@ -66,15 +66,15 @@ const contracts = {
     97: '',
   },
   dibs: {
-    56: '0x664cE330511653cB2744b8eD50DbA31C6c4C08ca',
+    56: '0x16D18eDE8b965109C035C481562f96D6708Ab463',
     97: '',
   },
   dibsLottery: {
-    56: '0x287ed50e4c158dac38e1b7e16c50cd1b2551a300',
+    56: '0xef817c2c9921ee944a40d7b01f77ce96ad87f72f',
     97: '',
   },
   muon: {
-    56: '0xBa079Ad36E48e75b8b37f17aF1Fc285bceB84391',
+    56: '0x529d8dbf0f104e13aa2c6de0f1953a4375d8c252',
     97: '',
   },
 }

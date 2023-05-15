@@ -16,6 +16,11 @@
   },
   {
     "inputs": [],
+    "name": "InvalidPercentages",
+    "type": "error"
+  },
+  {
+    "inputs": [],
     "name": "NotMuonInterface",
     "type": "error"
   },
@@ -179,37 +184,6 @@
     "inputs": [
       {
         "indexed": false,
-        "internalType": "uint32",
-        "name": "_oldGrandparent",
-        "type": "uint32"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint32",
-        "name": "_newGrandparent",
-        "type": "uint32"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint32",
-        "name": "_oldDibs",
-        "type": "uint32"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint32",
-        "name": "_newDibs",
-        "type": "uint32"
-      }
-    ],
-    "name": "SetGrandparentAndDibsPercentage",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
         "internalType": "address",
         "name": "_old",
         "type": "address"
@@ -244,6 +218,37 @@
     "type": "event"
   },
   {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint32",
+        "name": "_referrerPercentage",
+        "type": "uint32"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint32",
+        "name": "_refereePercentage",
+        "type": "uint32"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint32",
+        "name": "_grandparentPercentage",
+        "type": "uint32"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint32",
+        "name": "_dibsPercentage",
+        "type": "uint32"
+      }
+    ],
+    "name": "SetPercentages",
+    "type": "event"
+  },
+  {
     "inputs": [],
     "name": "DEFAULT_ADMIN_ROLE",
     "outputs": [
@@ -259,6 +264,19 @@
   {
     "inputs": [],
     "name": "DIBS",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "PROJECT_ID",
     "outputs": [
       {
         "internalType": "bytes32",
@@ -411,6 +429,19 @@
   },
   {
     "inputs": [],
+    "name": "dibsLottery",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "dibsPercentage",
     "outputs": [
       {
@@ -420,6 +451,57 @@
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "firstRoundStartTime",
+    "outputs": [
+      {
+        "internalType": "uint32",
+        "name": "",
+        "type": "uint32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      }
+    ],
+    "name": "getAddress",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      }
+    ],
+    "name": "getCode",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "pure",
     "type": "function"
   },
   {
@@ -519,11 +601,6 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "dibs_",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
         "name": "admin_",
         "type": "address"
       },
@@ -531,11 +608,44 @@
         "internalType": "address",
         "name": "setter_",
         "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "dibsLottery_",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "wethPriceFeed_",
+        "type": "address"
+      },
+      {
+        "internalType": "uint32",
+        "name": "firstRoundStartTime_",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint32",
+        "name": "roundDuration_",
+        "type": "uint32"
       }
     ],
     "name": "initialize",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "muonInterface",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -581,12 +691,33 @@
     "type": "function"
   },
   {
-    "inputs": [
+    "inputs": [],
+    "name": "refereePercentage",
+    "outputs": [
       {
-        "internalType": "address",
-        "name": "user",
-        "type": "address"
-      },
+        "internalType": "uint32",
+        "name": "",
+        "type": "uint32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "referrerPercentage",
+    "outputs": [
+      {
+        "internalType": "uint32",
+        "name": "",
+        "type": "uint32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
       {
         "internalType": "string",
         "name": "name",
@@ -640,21 +771,16 @@
     "type": "function"
   },
   {
-    "inputs": [
+    "inputs": [],
+    "name": "roundDuration",
+    "outputs": [
       {
         "internalType": "uint32",
-        "name": "_grandparentPercentage",
-        "type": "uint32"
-      },
-      {
-        "internalType": "uint32",
-        "name": "_dibsPercentage",
+        "name": "",
         "type": "uint32"
       }
     ],
-    "name": "setGrandparentAndDibsPercentage",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -691,6 +817,34 @@
   {
     "inputs": [
       {
+        "internalType": "uint32",
+        "name": "_refereePercentage",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint32",
+        "name": "_referrerPercentage",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint32",
+        "name": "_grandparentPercentage",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint32",
+        "name": "_dibsPercentage",
+        "type": "uint32"
+      }
+    ],
+    "name": "setPercentages",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "bytes4",
         "name": "interfaceId",
         "type": "bytes4"
@@ -702,6 +856,19 @@
         "internalType": "bool",
         "name": "",
         "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "wethPriceFeed",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
       }
     ],
     "stateMutability": "view",
