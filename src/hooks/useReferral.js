@@ -401,7 +401,6 @@ const useLeaderboardData = () => {
   const dibsContract = useDibs();
   const { account } = useWeb3React();
   const { fastRefresh } = useRefresh();
-  const isDaily = true;
 
   const lotteryContract = useDibsLottery();
   const [leaderBoardConfiguration, setLeaderBoardConfiguration] =
@@ -438,7 +437,7 @@ const useLeaderboardData = () => {
     fetchInfo();
   }, [dibsContract, account, fastRefresh]);
 
-  return { currentData, prevData, isDaily, leaderBoardConfiguration };
+  return { currentData, prevData, leaderBoardConfiguration };
 };
 
 const useClaimFees = () => {
