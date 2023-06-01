@@ -401,40 +401,36 @@ const useLeaderboardData = () => {
   const dibsContract = useDibs();
   const { account } = useWeb3React();
   const { fastRefresh } = useRefresh();
-  const [isDaily, setIsDaily] = useState(false);
+  const isDaily = true;
+
+  const lotteryContract = useDibsLottery();
+  const [leaderBoardConfiguration, setLeaderBoardConfiguration] =
+    useState(null);
+  useEffect(() => {
+    const f = async () => {
+      setLeaderBoardConfiguration(
+        await lotteryContract.methods.getLatestLeaderBoard().call()
+      );
+    };
+    f().catch(console.log);
+  }, [lotteryContract, setLeaderBoardConfiguration]);
 
   useEffect(() => {
     const fetchInfo = async () => {
       try {
+        const firstRoundStartTime = await dibsContract.methods
+          .firstRoundStartTime()
+          .call();
         const time = new Date().getTime() / 1000;
-        const startDailyTimestamp = 1677110400;
-        const firstTimestamp = 1673481600;
-        const currentWeeklyEpoch = Math.floor((time - firstTimestamp) / 604800);
-        const currentDailyEpoch =
-          Math.floor((time - startDailyTimestamp) / 86400) + 42;
-        setIsDaily(time > startDailyTimestamp);
-        if (time > startDailyTimestamp + 86400) {
-          const [cur, prev] = await Promise.all([
-            getDailyLeaderboardData(currentDailyEpoch),
-            getDailyLeaderboardData(currentDailyEpoch - 1),
-          ]);
-          setCurrentData(cur);
-          setPrevData(prev);
-        } else if (time > startDailyTimestamp) {
-          const [cur, prev] = await Promise.all([
-            getDailyLeaderboardData(currentDailyEpoch),
-            getWeeklyLeaderboardData(currentWeeklyEpoch - 1),
-          ]);
-          setCurrentData(cur);
-          setPrevData(prev);
-        } else {
-          const [cur, prev] = await Promise.all([
-            getWeeklyLeaderboardData(currentWeeklyEpoch),
-            getWeeklyLeaderboardData(currentWeeklyEpoch - 1),
-          ]);
-          setCurrentData(cur);
-          setPrevData(prev);
-        }
+        const currentDailyEpoch = Math.floor(
+          (time - firstRoundStartTime) / 86400
+        );
+        const [cur, prev] = await Promise.all([
+          getDailyLeaderboardData(currentDailyEpoch),
+          getDailyLeaderboardData(currentDailyEpoch - 1),
+        ]);
+        setCurrentData(cur);
+        setPrevData(prev);
       } catch (error) {
         console.log("leaderboard get error :>> ", error);
       }
@@ -442,7 +438,7 @@ const useLeaderboardData = () => {
     fetchInfo();
   }, [dibsContract, account, fastRefresh]);
 
-  return { currentData, prevData, isDaily };
+  return { currentData, prevData, isDaily, leaderBoardConfiguration };
 };
 
 const useClaimFees = () => {
